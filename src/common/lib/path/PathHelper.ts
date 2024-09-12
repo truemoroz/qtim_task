@@ -3,7 +3,7 @@ import { ArrayData } from '@/common/lib/array/ArrayHelper'
 export class PathHelper {
     public static resolvePath<TRes>(path: PropertyKey | PropertyKey[], obj: Record<PropertyKey, any> | ArrayData, separator = '.'): TRes {
         const properties = Array.isArray(path) ? path : path.toString().split(separator)
-        return properties.reduce((prev, curr) => prev && prev[curr], obj)
+        return properties.reduce((prev, curr) => prev && (prev as Record<PropertyKey, any>)[curr], obj)
     }
 
     public static insertValueByKeyPath(obj: Record<string, any>, keyPath: string, value: any): void {

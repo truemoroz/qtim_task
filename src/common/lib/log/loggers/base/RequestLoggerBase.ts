@@ -1,9 +1,9 @@
-import { IApiClient } from '@/services/auth/interfaces/IApiClient'
-import { apiClientTypeNames } from '@/services/auth/models/apiClient/ApiClientType'
 import { ApiRequestData } from '@/common/models/requests/basic/ApiRequestData'
 import { DataLogType, Log } from '@/common/lib/log/Log'
 import { DateTime } from 'ts-luxon'
 import colors from '@colors/colors'
+import { IApiClient } from '@/common/interfaces/auth/IApiClient'
+import { apiClientTypeNames } from '@/common/models/auth/ApiClientType'
 
 export type RequestLogLevel = 'log' | 'warn' | 'error'
 

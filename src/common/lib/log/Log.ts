@@ -1,5 +1,5 @@
 // export type DataLogType = string | number | Array<any> | Record<string | number, any>
-export type DataLogType = Record<string | number, any>
+export type DataLogType = Record<string | number, any> | string
 
 export class Log {
     static GetLog(data: DataLogType): DataLogType {
@@ -21,14 +21,14 @@ export class Log {
         if (logFunction) {
             return logFunction((data as Record<string | number, any>)[key])
         }
-        if (Array.isArray(data[key])) {
-            return this.GetArrayLogData(data[key])
-        } else if (data[key] && typeof data[key]['toISO'] == 'function') {
-            return data[key].toISO()
-        } else if (data[key] && typeof data[key] === 'object') {
-            return this.GetObjectLogData(data[key])
+        if (Array.isArray(data[key as number])) {
+            return this.GetArrayLogData(data[key as number])
+        } else if (data[key as number] && typeof data[key as number]['toISO'] == 'function') {
+            return data[key as number].toISO()
+        } else if (data[key as number] && typeof data[key as number] === 'object') {
+            return this.GetObjectLogData(data[key as number])
         } else {
-            return data[key]
+            return data[key as number]
         }
     }
 

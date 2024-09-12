@@ -1,4 +1,4 @@
-import { IApiClient } from '@/services/auth/interfaces/IApiClient'
+import { IApiClient } from '@/common/interfaces/auth/IApiClient'
 
 export type TVmPropertyContext = {
     sourceName: string,

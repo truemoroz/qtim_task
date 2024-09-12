@@ -1,0 +1,26 @@
+application:
+  port: ${PORT}
+  throttleLimit: ${THROTTLE_LIMIT}
+  throttleTtl: ${THROTTLE_TTL}
+  demoMode: ${DEMO_MODE}
+  defaultApiVersion: ${DEFAULT_API_VERSION}
+  standName: ${ALERTS_STANDNAME}
+  host: https://${PUBLIC_HOST}
+  remoteAuthSecretKey: ${REMOTE_AUTH_SECRET_KEY}
+database:
+  host: ${POSTGRES_HOST}
+  port: ${POSTGRES_PORT}
+  user: ${POSTGRES_USER}
+  password: ${POSTGRES_PASSWORD}
+  database: ${POSTGRES_DB}
+  replicaHost: ${POSTGRES_HOST_REPL}
+  maxPoolConnections: ${DB_MAX_POOL_CONNECTIONS}
+  minPoolConnections: ${DB_MIN_POOL_CONNECTIONS}
+  acquireTimeout: ${DB_ACQUIRE_TIMEOUT}
+jwt:
+  access:
+    secret: ${JWT_ACCESS_TOKEN_SECRET}
+    expirationTime: ${JWT_ACCESS_TOKEN_EXPIRATION_TIME}
+  refresh:
+    secret: ${JWT_REFRESH_TOKEN_SECRET}
+    expirationTime: ${JWT_REFRESH_TOKEN_EXPIRATION_TIME}

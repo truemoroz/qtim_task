@@ -1,8 +1,15 @@
-import { DataTypes, Sequelize, Utils } from 'sequelize'
+import {
+  AggregateOptions,
+  CountOptions,
+  DataTypes,
+  FindOptions,
+  Identifier,
+  Sequelize,
+  Utils,
+} from 'sequelize'
 import { inferAlias } from 'sequelize-typescript/dist/associations/alias-inference/alias-inference-service'
 import _ from 'lodash'
 import { QueryGeneratorHelper } from '@/common/lib/sequelize/queryGenerator/QueryGeneratorHelper'
-import { AggregateOptions, CountOptions, FindOptions, Identifier } from 'sequelize/dist/lib/model'
 import { Model, ModelCtor } from 'sequelize-typescript'
 
 export type RawSqlResult = {
@@ -79,7 +86,7 @@ export class RawSequelizeModel<M extends Model> {
 
         this.model.warnOnInvalidOptions(options, Object.keys(this.model.rawAttributes ?? {}))
 
-        const tableNames = {}
+        const tableNames: Record<string, any> = {}
 
         tableNames[this.model.getTableName(options)] = true
         options = Utils.cloneDeep(options)
@@ -247,7 +254,7 @@ export class RawSequelizeModel<M extends Model> {
         }
 
         if (_.isEmpty(options.include) && tableAlias) {
-            options.attributes = options.attributes.map(p => {
+            options.attributes = options.attributes.map((p: string) => {
                 if (_.isString(p)) {
                     return tableAlias + '.' + p
                 }

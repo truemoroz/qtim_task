@@ -1,5 +1,5 @@
 import { Constructor } from '@nestjs/common/utils/merge-with-values.util'
-import { IApiClient } from '@/services/auth/interfaces/IApiClient'
+import { IApiClient } from '@/common/interfaces/auth/IApiClient'
 
 export type TMapArrayParams<T> = {
     source: Record<string, any>[],

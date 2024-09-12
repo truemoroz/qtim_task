@@ -1,7 +1,7 @@
-import { Identifier } from 'sequelize/dist/lib/model'
 import { QueryableModel } from '@/common/lib/queryBuilder/models/QueryableModel'
 import { RawSqlResult } from '@/common/lib/queryBuilder/raw/RawSequelizeModel'
 import { RecursiveDBModelQuery } from '@/common/lib/queryBuilder/RecursiveDBModelQuery'
+import { Identifier } from 'sequelize'
 
 export class RawRecursiveDBModelQuery<M extends QueryableModel> {
     constructor(

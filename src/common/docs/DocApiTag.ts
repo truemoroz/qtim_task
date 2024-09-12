@@ -1,3 +1,3 @@
 export enum DocApiTag {
-    SomeTag = 'SomeTag',
+    Application = 'Application',
 }

@@ -65,7 +65,7 @@ export class ConfigLoader {
             const fields = {
                 [configPath]: this.makeErrorFieldsRecursive(errors),
             }
-            Logger.error('Config validation error', fields)
+            Logger.error('Config validation error', JSON.stringify(fields))
             process.exit(1)
         }
     }

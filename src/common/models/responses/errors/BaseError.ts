@@ -7,7 +7,7 @@ export class BaseError implements IResponseError {
     code: number
 
     @FieldDescriptor({ example: 'default', description: 'Error type' })
-    type = 'default'
+    type: string = 'default'
 
     @FieldDescriptor({ example: '' })
     description: string

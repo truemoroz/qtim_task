@@ -6,7 +6,6 @@ import { ModuleRef } from '@nestjs/core'
 import { IViewModelSelector } from '@/services/view-model/interfaces/IViewModelSelector'
 import { IViewModelPropertyHandler } from '@/services/view-model/interfaces/IViewModelPropertyHandler'
 import { IViewModelHandler } from '@/services/view-model/interfaces/IViewModelHandler'
-import { LocalizationService } from '@/services/localization/localization.service'
 import { PathHelper } from '@/common/lib/path/PathHelper'
 import { TMapArrayParams } from '@/services/view-model/types/TMapArrayParams'
 import { TMapParams } from '@/services/view-model/types/TMapParams'
@@ -23,7 +22,6 @@ export class ViewModelService implements OnModuleInit {
 
     constructor(
         private readonly moduleRef: ModuleRef,
-        private readonly localizationService: LocalizationService,
     ) {
     }
 
@@ -115,7 +113,7 @@ export class ViewModelService implements OnModuleInit {
      * @param client Модель клиента
      * @param ignoreBaseModelHandler Игнорировать базовый обработчик модели
      */
-    async map<T>({ source, destinationType, client, ignoreBaseModelHandler = false }: TMapParams<T>): Promise<T> {
+    async map<T extends Record<string, any>>({ source, destinationType, client, ignoreBaseModelHandler = false }: TMapParams<T>): Promise<T> {
         const typeName: string = destinationType.name
         if (!ViewModelService.viewModels[typeName]) {
             throw new Error('View model ' + typeName + ' not found')
@@ -145,19 +143,19 @@ export class ViewModelService implements OnModuleInit {
                     client,
                 })
                 if (handlerResult !== undefined) {
-                    result[destinationName] = handlerResult
+                    (result as Record<string, any>)[destinationName] = handlerResult
                 }
                 continue
             }
             if (nestedType && ViewModelService.viewModels[nestedType.name] && property) {
                 if (Array.isArray(property)) {
-                    result[destinationName] = await this.mapArray({
+                    (result as Record<string, any>)[destinationName] = await this.mapArray({
                         source: property,
                         destinationType: nestedType,
                         client: client,
                     })
                 } else {
-                    result[destinationName] = await this.map({
+                    (result as Record<string, any>)[destinationName] = await this.map({
                         source: property,
                         destinationType: nestedType,
                         client: client,
@@ -175,10 +173,7 @@ export class ViewModelService implements OnModuleInit {
                 if (property === undefined) {
                     continue
                 }
-                if (this.localizationService.canTranslate(vm.viewModelType, destinationName)) {
-                    result['#' + destinationName] = property
-                }
-                result[destinationName] = await this.localizationService.translateModel(vm.viewModelType, initialSource, destinationName, property, client?.lang)
+                (result as Record<string, any>)[destinationName] = property
             }
         }
         return result

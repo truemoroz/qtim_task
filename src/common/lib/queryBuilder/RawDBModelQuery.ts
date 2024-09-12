@@ -1,7 +1,7 @@
 import { DBModelQuery } from '@/common/lib/queryBuilder/DBModelQuery'
-import { Identifier } from 'sequelize/dist/lib/model'
 import { QueryableModel, QueryableModelCtor } from '@/common/lib/queryBuilder/models/QueryableModel'
 import { RawSequelizeModel, RawSqlResult } from '@/common/lib/queryBuilder/raw/RawSequelizeModel'
+import { Identifier } from 'sequelize'
 
 export class RawDBModelQuery<M extends QueryableModel> {
 

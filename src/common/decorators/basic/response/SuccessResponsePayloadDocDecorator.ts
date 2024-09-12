@@ -6,13 +6,13 @@ import { LogArray } from '@/common/decorators/log/view-models/LogArray'
 
 export const SuccessResponsePayloadDocs = (payloadType: ResponseParamType, isArray = false): ClassDecorator => {
     return applyDecorators(
-        target => {
+        (target: { prototype: Object }) => {
             createPropertyDecorator(DECORATORS.API_MODEL_PROPERTIES, {
                 type: payloadType,
                 isArray,
             }, true)(target.prototype, 'payload')
         },
-        target => {
+        (target: { prototype: Object }) => {
             if (isArray) {
                 LogArray(1)(target.prototype, 'payload')
             }

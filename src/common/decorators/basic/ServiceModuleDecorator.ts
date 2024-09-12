@@ -4,7 +4,6 @@ import { Abstract } from '@nestjs/common/interfaces/abstract.interface'
 
 type ImportsType = Array<Type | DynamicModule | Promise<DynamicModule> | ForwardReference>
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 type AdditionalExportsType = Array<DynamicModule | Promise<DynamicModule> | string | symbol | Provider | ForwardReference | Abstract<any> | Function>
 
 export const ServiceModule = (service: Constructor<any>, imports?: ImportsType, providers: Provider[] = [], additionalExports: AdditionalExportsType = []): ClassDecorator => {
