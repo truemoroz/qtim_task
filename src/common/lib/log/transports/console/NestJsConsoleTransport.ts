@@ -36,7 +36,8 @@ export class NestJsConsoleTransport extends LogTransportBase {
 
         const contextForLog = firstLine === true ? `~ ${context}` : context
         if (nestLevel === 'error') {
-            this.consoleLogger.error(resultMessage, stack, contextForLog)
+            const stackForLog = stack[0] ? stack : undefined
+            this.consoleLogger.error(resultMessage, stackForLog, contextForLog)
             return
         }
 
