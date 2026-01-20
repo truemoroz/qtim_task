@@ -19,32 +19,33 @@ dotenv.config()
 ConfigLoader.loadAll(process.env)
 
 async function bootstrap(): Promise<void> {
-  const telemetry = new AppTelemetry()
-  telemetry.start()
+    const telemetry = new AppTelemetry()
+    telemetry.start()
 
-  const logTransports: Transport[] = [new NestJsConsoleTransport()]
-  const appPort = process.env.PORT || 5000
+    const logTransports: Transport[] = [new NestJsConsoleTransport()]
+    const appPort = process.env.PORT || 5000
 
-  const app = await NestFactory.create(AppModule, {
-    cors: true,
-    logger: WinstonModule.createLogger({
-      transports: logTransports,
-    }),
-  })
+    const app = await NestFactory.create(AppModule, {
+        cors: true,
+        logger: WinstonModule.createLogger({
+            transports: logTransports,
+        }),
+    })
 
-  app.enableVersioning({
-    type: VersioningType.URI,
-    defaultVersion: VERSION_NEUTRAL,
-  })
+  
+    app.enableVersioning({
+        type: VersioningType.URI,
+        defaultVersion: VERSION_NEUTRAL,
+    })
 
-  DocumentationLoader.load(app)
+    DocumentationLoader.load(app)
 
-  app.useGlobalPipes(new TransformPipe(), new ValidationPipe())
-  app.use(urlencoded({ extended: true, limit: '10mb' }))
-  app.use(json({ limit: '10mb' }))
+    app.useGlobalPipes(new TransformPipe(), new ValidationPipe())
+    app.use(urlencoded({ extended: true, limit: '10mb' }))
+    app.use(json({ limit: '10mb' }))
 
-  useContainer(app.select(AppModule), { fallbackOnErrors: true })
-  await app.listen(appPort, () => console.log(`Server started on port = ${appPort}`))
+    useContainer(app.select(AppModule), { fallbackOnErrors: true })
+    await app.listen(appPort, () => console.log(`Server started on port = ${appPort}`))
 }
 
 bootstrap().catch(console.error)

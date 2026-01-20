@@ -11,9 +11,9 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { CacheModule } from '@nestjs/cache-manager'
 import { ConfigModule } from '@nestjs/config'
 import { ConfigLoader } from '@/common/lib/configuration/ConfigLoader'
-import { ServiceSequelizeModule } from '@/modules/sequelize/ServiceSequelizeModule'
 import path from 'path'
 import { ModuleAutoloader } from '@/common/lib/moduleLoading/ModuleAutoloader'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import dotenv from 'dotenv'
 
 const exceptionFilters = [
@@ -58,7 +58,18 @@ ConfigLoader.loadAll(process.env)
             load: [ConfigLoader.load(process.env)],
             isGlobal: true,
         }),
-        ServiceSequelizeModule.forRoot(),
+        TypeOrmModule.forRoot({
+            type: 'postgres',
+            host: process.env.DB_HOST,
+            port: parseInt(process.env.DB_PORT || '5432', 10),
+            username: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+            entities: [path.join(__dirname, '..', 'common', 'models', 'database', '**', '*.entity.{ts,js}')],
+            synchronize: false,
+            logging: true,
+        }),
+        // ServiceSequelizeModule.forRoot(),
         ...ModuleAutoloader.loadModules(path.join(__dirname, 'controllers')),
         ...ModuleAutoloader.loadModules(path.join(__dirname, 'services')),
     ],
