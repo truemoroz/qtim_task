@@ -3,8 +3,10 @@ import { AppConfigService } from '@/services/app/configuration/app-config.servic
 import { RefreshJwtConfig } from '@/common/models/config'
 
 export class RefreshJwtPayload {
-    userId: number
-    networkAccount: boolean
+    userId: string
+    constructor(userId: string) {
+        this.userId = userId
+    }
 }
 
 export class RefreshJwt implements IJwt<RefreshJwtPayload> {

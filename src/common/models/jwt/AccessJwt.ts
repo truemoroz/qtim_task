@@ -3,8 +3,11 @@ import { AppConfigService } from '@/services/app/configuration/app-config.servic
 import { AccessJwtConfig } from '@/common/models/config'
 
 export class AccessJwtPayload {
-    userId: number
-    userAccount: boolean
+    userId: string
+
+    constructor(userId: string) {
+        this.userId = userId
+    }
 }
 
 export class AccessJwt implements IJwt<AccessJwtPayload> {

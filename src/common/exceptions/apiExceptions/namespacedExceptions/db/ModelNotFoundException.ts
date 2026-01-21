@@ -1,7 +1,7 @@
 import { ApiException } from '@/common/exceptions/ApiException'
 import { IApiException } from '@/common/exceptions/apiExceptions/interfaces/IApiException'
 import { DbExceptionsNS } from '@/common/exceptions/apiExceptions/namespaces'
-import { Model } from 'sequelize-typescript'
+// import { Model } from 'sequelize-typescript'
 import { Constructor } from '@nestjs/common/utils/merge-with-values.util'
 import { DbExceptionCodes } from '@/common/exceptions/apiExceptions/enums'
 
@@ -10,7 +10,7 @@ export class ModelNotFoundException extends ApiException implements IApiExceptio
     readonly errorName = 'modelNotFound'
     readonly ns = DbExceptionsNS
 
-    constructor(model: Constructor<Model>) {
+    constructor(model: Constructor<any>) {
         super()
         this.params = {
             modelName: model.name,

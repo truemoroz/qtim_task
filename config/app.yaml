@@ -8,11 +8,11 @@ application:
   host: https://${PUBLIC_HOST}
   remoteAuthSecretKey: ${REMOTE_AUTH_SECRET_KEY}
 database:
-  host: ${POSTGRES_HOST}
-  port: ${POSTGRES_PORT}
-  user: ${POSTGRES_USER}
-  password: ${POSTGRES_PASSWORD}
-  database: ${POSTGRES_DB}
+  host: ${DB_HOST}
+  port: ${DB_PORT}
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
+  database: ${DB_NAME}
   replicaHost: ${POSTGRES_HOST_REPL}
   maxPoolConnections: ${DB_MAX_POOL_CONNECTIONS}
   minPoolConnections: ${DB_MIN_POOL_CONNECTIONS}

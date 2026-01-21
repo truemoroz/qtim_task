@@ -4,6 +4,6 @@ import { ServiceModule } from '@/common/decorators/basic/ServiceModuleDecorator'
 import { Global } from '@nestjs/common'
 
 @Global()
-@ServiceModule(JwtAuthService, [JwtModule.register({})], [], [JwtModule])
+@ServiceModule(JwtAuthService, [JwtModule.register({})], [], [JwtModule, JwtAuthService])
 export class JwtAuthServiceModule {
 }

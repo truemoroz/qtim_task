@@ -23,8 +23,8 @@ import {
     MinLength,
 } from 'class-validator'
 import { Type } from 'class-transformer'
-import { QueryableModel } from '@/common/lib/queryBuilder/models/QueryableModel'
-import { IsPrimaryKey } from '@/common/decorators/validation/dbModels/IsPrimaryKey'
+// import { QueryableModel } from '@/common/lib/queryBuilder/models/QueryableModel'
+// import { IsPrimaryKey } from '@/common/decorators/validation/dbModels/IsPrimaryKey'
 import { Constructor } from '@nestjs/common/utils/merge-with-values.util'
 import { TransformToBoolean } from '@/common/decorators/validation/transform/TransformToBoolean'
 import { TransformToDate } from '@/common/decorators/validation/transform/TransformToDate'
@@ -38,7 +38,7 @@ export type ModelFieldOptions = ApiPropertyOptions & {
     dateValue?: boolean
     objectValue?: boolean
     isNotEmpty?: boolean
-    isPrimaryKeyOf?: () => Constructor<QueryableModel>
+    // isPrimaryKeyOf?: () => Constructor<QueryableModel>
     isNegative?: boolean
     isPositive?: boolean
     notin?: Array<any>
@@ -109,22 +109,22 @@ export const FieldDescriptor: (options: ModelFieldOptions) => PropertyDecorator 
                 }
                 const type = options.type()
                 switch (type) {
-                    case String:
-                        decorators.push(IsString({ each: !!options.isArray }))
-                        break
-                    case Number:
-                        decorators.push(IsNumber({}, { each: !!options.isArray }))
-                        break
-                    case Object:
-                        decorators.push(IsObject({ each: !!options.isArray }))
-                        break
+                case String:
+                    decorators.push(IsString({ each: !!options.isArray }))
+                    break
+                case Number:
+                    decorators.push(IsNumber({}, { each: !!options.isArray }))
+                    break
+                case Object:
+                    decorators.push(IsObject({ each: !!options.isArray }))
+                    break
                 }
             }
 
-            if (options.isPrimaryKeyOf) {
-                const model = options.isPrimaryKeyOf()
-                decorators.push(IsPrimaryKey(model, options.isArray))
-            }
+            // if (options.isPrimaryKeyOf) {
+            //     const model = options.isPrimaryKeyOf()
+            //     decorators.push(IsPrimaryKey(model, options.isArray))
+            // }
 
             if (options.enum) {
                 decorators.push(IsEnum(options.enum, { each: true }))

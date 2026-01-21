@@ -15,6 +15,8 @@ import path from 'path'
 import { ModuleAutoloader } from '@/common/lib/moduleLoading/ModuleAutoloader'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import dotenv from 'dotenv'
+import { UserModule } from '@/modules/user.module'
+import { User } from '@/common/models/database/user.entity'
 
 const exceptionFilters = [
     CriticalApiExceptionFilter,
@@ -65,13 +67,14 @@ ConfigLoader.loadAll(process.env)
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
-            entities: [path.join(__dirname, '..', 'common', 'models', 'database', '**', '*.entity.{ts,js}')],
+            entities: [User],
             synchronize: false,
             logging: true,
         }),
+        ...ModuleAutoloader.loadModules(path.join(__dirname, 'services')),
         // ServiceSequelizeModule.forRoot(),
         ...ModuleAutoloader.loadModules(path.join(__dirname, 'controllers')),
-        ...ModuleAutoloader.loadModules(path.join(__dirname, 'services')),
+        UserModule,
     ],
 })
 export class AppModule {

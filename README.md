@@ -58,6 +58,26 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+# Database Migrations
+
+## Run Migrations
+
+```bash
+npx typeorm-ts-node-commonjs -d src/data-source.ts migration:run
+```
+
+## Revert Migrations
+
+```bash
+npx typeorm-ts-node-commonjs -d src/data-source.ts migration:revert
+```
+
+## Generate Migration
+
+```bash
+npx typeorm-ts-node-commonjs -d src/data-source.ts migration:generate src/common/migrations/MigrationName
+```
+
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:

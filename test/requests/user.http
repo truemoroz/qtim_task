@@ -1,0 +1,17 @@
+### GET request to example server
+POST http://localhost:5000/user
+Content-Type: application/json
+
+{
+  "email": "demo@example.com",
+  "password": "demoPassword"
+}
+
+###
+POST http://localhost:5000/user/auth
+Content-Type: application/json
+
+{
+    "email": "demo@example.com",
+    "password": "demoPassword"
+}
