@@ -3,14 +3,14 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiY2FkNDY5MC1hMDM5LTRkMmItOGMxMS0zOWU0OGI2ZTc1MTgiLCJpYXQiOjE3NjkwNTM0NzEsImV4cCI6MTc2OTA1MzQ3Mn0.0kgcZXfwnzv0Gj1nLVctKuDoEqR7LTLUqjna33xsR4w
 
 {
-  "title": "Another Article",
+  "title": "Another Article 10",
   "description": "This is a sample article for testing purposes.",
   "authorId": 1,
   "publishDate": "2024-06-01T10:00:00Z"
 }
 
 ###
-GET http://localhost:5000/article
+GET http://localhost:5000/article?page=1&publishDate=2024-06-02
 Content-Type: application/json
 
 ###

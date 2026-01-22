@@ -1,9 +1,13 @@
-import { SuccessResponse } from '@/common/models/responses/SuccessResponse'
 import { ArticleVM } from '@/controllers/article/models/create-article.res'
-import { SuccessResponsePayloadDocs } from '@/common/decorators/basic/response/SuccessResponsePayloadDocDecorator'
-import { ArticleDTO } from '@/services/article/models/article-dto'
+import { PaginationPayload, PaginationResponse } from '@/common/models/responses/PaginationResponse'
+import { PaginationResponseDocs } from '@/common/decorators/basic/response/PaginationResponseDocsDecorator'
 
-@SuccessResponsePayloadDocs(ArticleVM, true)
-export class GetArticlesRes extends SuccessResponse<ArticleDTO[]> {
+class ArticlePaginationPayload extends PaginationPayload<ArticleVM>{
+}
 
+@PaginationResponseDocs(ArticlePaginationPayload, ArticleVM)
+export class GetArticlesRes extends PaginationResponse<ArticleVM> {
+    constructor(items: ArticleVM[], total: number) {
+        super(new ArticlePaginationPayload(items, total))
+    }
 }

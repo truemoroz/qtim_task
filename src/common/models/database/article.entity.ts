@@ -21,4 +21,5 @@ export class Article {
     @ManyToOne(() => Author)
     @JoinColumn({ name: 'author_id' })
         author: Author
+
 }

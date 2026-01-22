@@ -4,6 +4,6 @@ import { IApiClient } from '@/common/interfaces/auth/IApiClient'
 export type TMapParams<T> = {
     source: Record<string, any>,
     destinationType: Constructor<T>,
-    client: IApiClient,
+    // client: IApiClient,
     ignoreBaseModelHandler?: boolean
 }

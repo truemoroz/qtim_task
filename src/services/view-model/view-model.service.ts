@@ -106,14 +106,15 @@ export class ViewModelService implements OnModuleInit {
         }
     }
 
-        /**
+    /**
      * Выполняет преобразование единичной модели
      * @param source Исходная модель
      * @param destinationType Тип результирующей модели
      * @param client Модель клиента
      * @param ignoreBaseModelHandler Игнорировать базовый обработчик модели
      */
-    async map<T extends Record<string, any>>({ source, destinationType, client, ignoreBaseModelHandler = false }: TMapParams<T>): Promise<T> {
+    // async map<T extends Record<string, any>>({ source, destinationType, client, ignoreBaseModelHandler = false }: TMapParams<T>): Promise<T> {
+    async map<T extends Record<string, any>>({ source, destinationType, ignoreBaseModelHandler = false }: TMapParams<T>): Promise<T> {
         const typeName: string = destinationType.name
         if (!ViewModelService.viewModels[typeName]) {
             throw new Error('View model ' + typeName + ' not found')
@@ -125,7 +126,7 @@ export class ViewModelService implements OnModuleInit {
             const handlerResult = await vm.modelHandlerInstance.getValue(source, {
                 sourceName: null,
                 modelProperties: properties,
-                client,
+                // client,
             })
             if (handlerResult !== undefined) {
                 result = handlerResult
@@ -140,7 +141,7 @@ export class ViewModelService implements OnModuleInit {
                 const handlerResult = await ViewModelService.viewModels[nestedType.name].modelHandlerInstance.getValue(initialSource, {
                     sourceName,
                     modelProperties: properties,
-                    client,
+                    // client,
                 })
                 if (handlerResult !== undefined) {
                     (result as Record<string, any>)[destinationName] = handlerResult
@@ -152,13 +153,13 @@ export class ViewModelService implements OnModuleInit {
                     (result as Record<string, any>)[destinationName] = await this.mapArray({
                         source: property,
                         destinationType: nestedType,
-                        client: client,
+                        // client: client,
                     })
                 } else {
                     (result as Record<string, any>)[destinationName] = await this.map({
                         source: property,
                         destinationType: nestedType,
-                        client: client,
+                        // client: client,
                     })
                 }
             } else {
@@ -167,7 +168,7 @@ export class ViewModelService implements OnModuleInit {
                         sourceName,
                         destinationName,
                         propertyValue: property,
-                        client,
+                        // client,
                     })
                 }
                 if (property === undefined) {
@@ -186,13 +187,14 @@ export class ViewModelService implements OnModuleInit {
      * @param client Модель клиента
      * @param ignoreBaseModelHandler Игнорировать базовый обработчик модели
      */
-    async mapArray<T>({ source, destinationType, client, ignoreBaseModelHandler = false }: TMapArrayParams<T>): Promise<T[]> {
+    // async mapArray<T>({ source, destinationType, client, ignoreBaseModelHandler = false }: TMapArrayParams<T>): Promise<T[]> {
+    async mapArray<T>({ source, destinationType, ignoreBaseModelHandler = false }: TMapArrayParams<T>): Promise<T[]> {
         const result: T[] = []
         for (let i = 0; i < source.length; i++) {
             result.push(await this.map({
                 source: source[i],
                 destinationType: destinationType,
-                client: client,
+                // client: client,
                 ignoreBaseModelHandler: ignoreBaseModelHandler,
             }))
         }

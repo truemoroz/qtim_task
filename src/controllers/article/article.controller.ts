@@ -1,27 +1,33 @@
 import { ApiController } from '@/common/decorators/basic/ApiControllerDecorator'
 import { DocApiTag } from '@/common/docs/DocApiTag'
 import { ArticleService } from '@/services/article/article.service'
-import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { AuthRequired } from '@/common/decorators/auth/AuthRequired'
 import { ArticleCreateReq } from '@/controllers/article/models/article-create.req'
+import { ArticlePaginationReq } from '@/controllers/article/models/article-pagination.req'
 import { ArticleDTO } from '@/services/article/models/article-dto'
 import { ApiMethodDocs } from '@/common/decorators/basic/ApiMethodDocsDecorator'
-import { CreateArticleRes } from '@/controllers/article/models/create-article.res'
+import { ArticleVM, CreateArticleRes } from '@/controllers/article/models/create-article.res'
 import { GetArticlesRes } from '@/controllers/article/models/get-articles.res'
 import { ArticleUpdateReq } from '@/controllers/article/models/article-update.req'
 import { EmptySuccessResponse } from '@/common/models/responses/EmptySuccessResponse'
+import { ViewModelService } from '@/services/view-model/view-model.service'
 
 
 @ApiController('article', DocApiTag.Article)
 export class ArticleController {
-    constructor(private readonly articleService: ArticleService) {
+    constructor(private readonly articleService: ArticleService,
+                private readonly viewModelService: ViewModelService) {
     }
 
     @Get()
     @ApiMethodDocs('Get All Articles', GetArticlesRes)
-    async getArticles(): Promise<GetArticlesRes> {
-        const articles: ArticleDTO[] = await this.articleService.getAllArticles()
-        return new GetArticlesRes(articles)
+    async getArticles(@Query() query: ArticlePaginationReq): Promise<GetArticlesRes> {
+        const { items, total } = await this.articleService.getAllArticles(query.page, query.limit, query.authorId, query.publishDate)
+        const vmItems = await this.viewModelService.mapArray({
+            source: items,
+            destinationType: ArticleVM })
+        return new GetArticlesRes(vmItems, total)
     }
 
     @Post()

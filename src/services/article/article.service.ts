@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Article } from '@/common/models/database/article.entity'
-import { Repository } from 'typeorm'
+import { FindOptionsWhere, Repository } from 'typeorm'
 import { ArticleDTO } from '@/services/article/models/article-dto'
 
 @Injectable()
@@ -15,8 +15,17 @@ export class ArticleService {
         return await this.articleRepository.save(newArticle)
     }
 
-    async getAllArticles(): Promise<Article[]> {
-        return await this.articleRepository.find()
+    async getAllArticles(page: number, limit: number, authorId?: number, publishDate?: Date): Promise<{ items: ArticleDTO[], total: number }> {
+        const where: FindOptionsWhere<Article> = {}
+        if (authorId) {where.authorId = authorId}
+        if (publishDate) {where.publishDate = publishDate}
+
+        const [items, total] = await this.articleRepository.findAndCount({
+            where,
+            skip: (page - 1) * limit,
+            take: limit,
+        })
+        return { items, total }
     }
 
     async updateArticle(id: string, article: ArticleDTO): Promise<Article> {
