@@ -17,6 +17,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import dotenv from 'dotenv'
 import { UserModule } from '@/modules/user.module'
 import { User } from '@/common/models/database/user.entity'
+import { Article } from '@/common/models/database/article.entity'
+import { Author } from '@/common/models/database/author.entity'
+import { ArticleModule } from '@/modules/article.module'
 
 const exceptionFilters = [
     CriticalApiExceptionFilter,
@@ -67,7 +70,7 @@ ConfigLoader.loadAll(process.env)
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
-            entities: [User],
+            entities: [User, Article, Author],
             synchronize: false,
             logging: true,
         }),
@@ -75,10 +78,11 @@ ConfigLoader.loadAll(process.env)
         // ServiceSequelizeModule.forRoot(),
         ...ModuleAutoloader.loadModules(path.join(__dirname, 'controllers')),
         UserModule,
+        ArticleModule,
     ],
 })
 export class AppModule {
-    static readonly SERVICE_NAME = 'service_name'
+    static readonly SERVICE_NAME = 'qtim'
     static readonly API_VERSION_DEFINITIONS: Record<ApiVersion, string> = {
         [ApiVersion.V1]: '1.0.0',
     }

@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER ?? 'postgres',
     password: process.env.DB_PASSWORD ?? 'postgres',
     database: process.env.DB_NAME ?? 'postgres',
-    entities: [],
+    entities: [path.join(__dirname, 'common/models/database/*.entity{.ts,.js}')],
     migrations: [path.join(__dirname, 'common/migrations/*{.ts,.js}')],
     migrationsRun: false,
     synchronize: false,

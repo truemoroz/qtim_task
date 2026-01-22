@@ -1,6 +1,7 @@
 import { Constructor } from '@nestjs/common/utils/merge-with-values.util'
 import { applyDecorators, DynamicModule, ForwardReference, Module, Provider, Type } from '@nestjs/common'
 import { Abstract } from '@nestjs/common/interfaces/abstract.interface'
+import { ModuleAutoloader } from '@/common/lib/moduleLoading/ModuleAutoloader'
 
 type ImportsType = Array<Type | DynamicModule | Promise<DynamicModule> | ForwardReference>
 
@@ -13,5 +14,8 @@ export const ServiceModule = (service: Constructor<any>, imports?: ImportsType, 
             imports: imports,
             exports: [service, ...additionalExports],
         }),
+        (target: Function) => {
+            ModuleAutoloader.addModule(target)
+        },
     )
 }

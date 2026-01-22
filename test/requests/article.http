@@ -1,0 +1,28 @@
+POST http://localhost:5000/article
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiY2FkNDY5MC1hMDM5LTRkMmItOGMxMS0zOWU0OGI2ZTc1MTgiLCJpYXQiOjE3NjkwNTM0NzEsImV4cCI6MTc2OTA1MzQ3Mn0.0kgcZXfwnzv0Gj1nLVctKuDoEqR7LTLUqjna33xsR4w
+
+{
+  "title": "Another Article",
+  "description": "This is a sample article for testing purposes.",
+  "authorId": 1,
+  "publishDate": "2024-06-01T10:00:00Z"
+}
+
+###
+GET http://localhost:5000/article
+Content-Type: application/json
+
+###
+PUT http://localhost:5000/article/2524ba6b-8370-4447-9db8-68071531285f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiY2FkNDY5MC1hMDM5LTRkMmItOGMxMS0zOWU0OGI2ZTc1MTgiLCJpYXQiOjE3NjkwNTM0NzEsImV4cCI6MTc2OTA1MzQ3Mn0.0kgcZXfwnzv0Gj1nLVctKuDoEqR7LTLUqjna33xsR4w
+
+{
+  "description": "Updated description for the sample article."
+}
+
+###
+DELETE http://localhost:5000/article/9ef477f2-e4c8-479f-a286-5ba0801f0b3e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiY2FkNDY5MC1hMDM5LTRkMmItOGMxMS0zOWU0OGI2ZTc1MTgiLCJpYXQiOjE3NjkwNTM0NzEsImV4cCI6MTc2OTA1MzQ3Mn0.0kgcZXfwnzv0Gj1nLVctKuDoEqR7LTLUqjna33xsR4w
