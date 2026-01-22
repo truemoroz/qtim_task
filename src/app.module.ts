@@ -20,6 +20,7 @@ import { User } from '@/common/models/database/user.entity'
 import { Article } from '@/common/models/database/article.entity'
 import { Author } from '@/common/models/database/author.entity'
 import { ArticleModule } from '@/modules/article.module'
+import { redisStore } from 'cache-manager-redis-yet'
 
 const exceptionFilters = [
     CriticalApiExceptionFilter,
@@ -55,8 +56,18 @@ ConfigLoader.loadAll(process.env)
     ],
 
     imports: [
-        CacheModule.register({
+        CacheModule.registerAsync({
             isGlobal: true,
+            useFactory: async () => ({
+                store: await redisStore({
+                    socket: {
+                        host: process.env.REDIS_HOST || 'localhost',
+                        port: parseInt(process.env.REDIS_PORT || '6379', 10),
+                    },
+                    database: process.env.REDIS_DB ? parseInt(process.env.REDIS_DB, 10) : 0,
+                    password: process.env.REDIS_PASSWORD || undefined,
+                }),
+            }),
         }),
         ThrottlerModule.forRoot(),
         ConfigModule.forRoot({

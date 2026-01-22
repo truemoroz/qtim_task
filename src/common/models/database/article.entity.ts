@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Author } from '@/common/models/database/author.entity'
+import { Author } from './author.entity'
 
 @Entity('articles')
 export class Article {
@@ -12,7 +12,7 @@ export class Article {
     @Column({ type: 'text' })
         description: string
 
-    @Column({ name: 'publish_date', type: 'timestamp with time zone' })
+    @Column({ name: 'publish_date', type: 'date' })
         publishDate: Date
 
     @Column({ name: 'author_id', type: 'int' })

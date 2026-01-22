@@ -7,6 +7,7 @@ export class ArticleCreateReq {
         required: true,
         minLength: 5,
         maxLength: 150,
+        type: () => String,
     })
         title: string
 
@@ -15,6 +16,7 @@ export class ArticleCreateReq {
         description: 'Content of the article',
         required: true,
         minLength: 20,
+        type: () => String,
     })
         description: string
 
@@ -22,12 +24,14 @@ export class ArticleCreateReq {
         example: 42,
         description: 'ID of the author creating the article',
         required: true,
+        type: () => Number,
     })
         authorId: number
 
     @FieldDescriptor({
         example: '2024-06-15T12:00:00Z',
         description: 'Publication date of the article',
+        type: () => String,
         required: true,
     })
         publishDate: Date
